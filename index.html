@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Online Bank 2k21</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div id="login-area">
+      <h1 class="text-center">Welcome TO Your Online Bank</h1>
+      <div class="submit-area">
+        <h4>Login</h4>
+        <input class="form-control" type="email" placeholder="Email" />
+        <input class="form-control" type="password" />
+        <button id="login" class="btn btn-success">Enter</button>
+      </div>
+    </div>
+
+    <div id="transaction-area">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="deposit status">
+            <h5>Deposit</h5>
+            <h2>$ <span id="deposit-amount-text">00</span></h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="withdraw status">
+            <h5>Withdraw</h5>
+            <h2>$ <span id="withdraw-amount-text">00</span></h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="balance status">
+            <h5>Balance</h5>
+            <h2>$ <span id="balance-amount-text">1240</span></h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="submit-area">
+            <h4>Deposit</h4>
+            <input id="deposit-amount" class="form-control" type="number" />
+            <button id="deposit-btn" class="btn btn-success">Deposit</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="submit-area">
+            <h4>Withdraw</h4>
+            <input id="withdraw-amount" class="form-control" type="number" />
+            <button id="withdraw-btn" class="btn btn-success">Withdraw</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // login button interaction
+      const loginBtn = document.getElementById("login");
+      loginBtn.addEventListener("click", function () {
+        document.getElementById("login-area").style.display = "none";
+        document.getElementById("transaction-area").style.display = "block";
+      });
+
+      // deposit button interaction
+      const depositBtn = document.getElementById("deposit-btn");
+      depositBtn.addEventListener("click", function () {
+        showAmount("deposit-amount-text", "deposit-amount");
+        showAmount("balance-amount-text", "deposit-amount");
+        document.getElementById("deposit-amount").value = "";
+      });
+
+      // withdraw button interaction
+      const withdrawBtn = document.getElementById("withdraw-btn");
+      withdrawBtn.addEventListener("click", function () {
+        showAmount("withdraw-amount-text", "withdraw-amount");
+        showAmount("balance-amount-text", "withdraw-amount");
+        document.getElementById("withdraw-amount").value = "";
+      });
+
+      function showAmount(id1, id2) {
+        let currentAmountInString = document.getElementById(id1).innerText;
+        let currentAmountInNumber = parseInt(currentAmountInString);
+
+        let newAmountInStr = document.getElementById(id2).value;
+        let newAmountInNumber = parseInt(newAmountInStr);
+
+        if (id1 == "balance-amount-text" && id2 == "withdraw-amount") {
+          if (currentAmountInNumber < newAmountInNumber) {
+            alert(`You Can't withdraw greater amount than your balance`);
+            document.getElementById("withdraw-amount-text").innerText = "00";
+          } else {
+            newAmountInNumber = currentAmountInNumber - newAmountInNumber;
+            document.getElementById(id1).innerText = newAmountInNumber;
+          }
+        } else {
+          newAmountInNumber += currentAmountInNumber;
+          document.getElementById(id1).innerText = newAmountInNumber;
+        }
+      }
+    </script>
+  </body>
+</html>
